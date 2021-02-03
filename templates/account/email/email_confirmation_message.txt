@@ -1,0 +1,8 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Përshendetje nga {{ site_name }}!
+
+Po pranoni këtë email për shkak se përdoruesi me email {{ user_display }} ka dhënë email adresën tuaj për të lidhur llogarinë e tij/saj.
+
+Për të konfirmuar se është e saktë, shkoni te {{ activate_url }}
+{% endblocktrans %}{% endautoescape %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Falemnderit nga {{ site_name }}!
+{{ site_domain }}{% endblocktrans %}

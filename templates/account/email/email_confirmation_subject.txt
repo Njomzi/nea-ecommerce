@@ -1,0 +1,4 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}Konfirmoni E-mail adresën tuaj{% endblocktrans %}
+{% endautoescape %}

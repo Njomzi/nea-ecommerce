@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}Ju nuk mund ta ndryshoni E-mail adresën tuaj ({{email}}).{% endblocktrans %}
