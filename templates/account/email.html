@@ -1,0 +1,73 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Llogaria" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "E-mail Adresat" %}</h1>
+{% if user.emailaddress_set.all %}
+<p>{% trans 'E-mail adresat në vazhdim janë të asocuara me llogarinë tuaj:' %}</p>
+
+<form action="{% url 'account_email' %}" class="email_list" method="post">
+{% csrf_token %}
+<fieldset class="blockLabels">
+
+  {% for emailaddress in user.emailaddress_set.all %}
+<div class="ctrlHolder">
+      <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
+
+      <input id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+
+{{ emailaddress.email }}
+    {% if emailaddress.verified %}
+    <span class="verified">{% trans "E verifikuar" %}</span>
+    {% else %}
+    <span class="unverified">{% trans "Jo e verifikuar" %}</span>
+    {% endif %}
+      {% if emailaddress.primary %}<span class="primary">{% trans "Primare" %}</span>{% endif %}
+</label>
+</div>
+  {% endfor %}
+
+<div class="buttonHolder">
+      <button class="secondaryAction" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
+      <button class="secondaryAction" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
+      <button class="primaryAction" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+</div>
+
+</fieldset>
+</form>
+
+{% else %}
+<p><strong>{% trans 'Warning:'%}</strong> {% trans "Për momentin nuk e keni asnjë email adresës të vendosur. Ju duhet të vendosi një email adresë në mënyrë që të merrni njoftimi, të mund të e ndryshoni fjalëkalimin, etj." %}</p>
+
+{% endif %}
+
+
+    <h2>{% trans "Shtoni E-mail Adresën tuaj" %}</h2>
+
+    <form method="post" action="{% url 'account_email' %}" class="add_email">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="action_add" type="Përfundoni">{% trans "Shtoni E-mail" %}</button>
+    </form>
+
+{% endblock %}
+
+
+{% block extra_body %}
+<script type="text/javascript">
+(function() {
+  var message = "{% trans 'A dëshironi që të e zhvendosni email adresën e selektuar?' %}";
+  var actions = document.getElementsByName('action_remove');
+  if (actions.length) {
+    actions[0].addEventListener("Klikoni", function(e) {
+      if (! confirm(message)) {
+        e.preventDefault();
+      }
+    });
+  }
+})();
+</script>
+{% endblock %}

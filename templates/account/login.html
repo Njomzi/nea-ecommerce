@@ -1,0 +1,54 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{% trans "Kyçja" %}{% endblock %}
+
+{% block content %}
+  <main>
+    <div class="container" style="margin-top:5%;">
+      <section class="mb-4">
+        <div class="row wow fadeIn">
+          <div class='col-6 offset-3'>
+          <h1>{% trans "Kyçuni" %}</h1>
+
+          {% get_providers as socialaccount_providers %}
+
+          {% if socialaccount_providers %}
+          <p>{% blocktrans with site.name as site_name %}Ju lutem kyçuni me një nga email adresat ekzistente. Ose, <a href="{{ signup_url }}">Regjistrohuni</a>
+          për një {{ site_name }} llogari dhe kyçuni më poshtë:{% endblocktrans %}</p>
+
+          <div class="socialaccount_ballot">
+
+            <ul class="socialaccount_providers">
+              {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </ul>
+
+            <div class="login-or">{% trans 'or' %}</div>
+
+          </div>
+
+          {% include "socialaccount/snippets/login_extra.html" %}
+
+          {% else %}
+          <p>{% blocktrans %}Nëse nuk keni krijuar një llogari ende, atëherë ju lutemi
+          <a href="{{ signup_url }}">Regjistrohuni</a> fillimisht.{% endblocktrans %}</p>
+          {% endif %}
+
+          <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <a class="btn btn-default" href="{% url 'account_reset_password' %}">{% trans "Keni harruar fjalëkalimin?" %}</a>
+            <button class="btn btn-primary" type="Përfundoni">{% trans "Kyçuni" %}</button>
+          </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Dilni" %}{% endblock %}
+
+{% block content %}
+  <main>
+    <div class="container" style="margin-top:5%;">
+      <section class="mb-4">
+        <div class="row wow fadeIn">
+          <div class='col-6 offset-3'>
+            <h1>{% trans "Dilni" %}</h1>
+            <p>{% trans 'A jeni të sigurt që dëshironi të dilni?' %}</p>
+            <form method="post" action="{% url 'account_logout' %}">
+              {% csrf_token %}
+              {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+              {% endif %}
+              <button class='btn btn-primary' type="Përfundoni">{% trans 'Dilni' %}</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+{% endblock %}

@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}Keni dalur nga llogaria juaj.{% endblocktrans %}

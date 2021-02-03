@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}Konfirmimi i E-mail adresës është dërguar në {{email}}.{% endblocktrans %}

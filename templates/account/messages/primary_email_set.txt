@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}E-mail adresa primare është vendosur me sukses.{% endblocktrans %}
